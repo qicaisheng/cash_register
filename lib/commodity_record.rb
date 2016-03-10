@@ -11,5 +11,9 @@ module CommodityRecord
         Commodity.new(commodity_params)
       }
     end
+
+    def find(barcode)
+      @records.find { |commodity| commodity.barcode == barcode }
+    end
   end
 end
