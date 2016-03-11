@@ -4,9 +4,10 @@ require 'shopping_item'
 
 module CashRegister
   class << self
-    attr_reader :shopping_list
+    attr_reader :shopping_list, :barcode_array
 
-    def perfom
+    def perfom(barcode_array = nil)
+      @barcode_array = barcode_array
       CommodityRecord.refresh
       scan_shopping_commodities
       print_shopping_list
@@ -15,9 +16,11 @@ module CashRegister
     private
 
     def scan_shopping_commodities
-      file_path = File.expand_path('../../data/shopping_list.json', __FILE__)
-      barcode_array = JSON.parse(File.read(file_path))
-      barcode_with_quantity = barcode_array.group_by { |item| item }
+      unless @barcode_array
+        file_path = File.expand_path('../../data/shopping_list.json', __FILE__)
+        @barcode_array = JSON.parse(File.read(file_path))
+      end
+      barcode_with_quantity = @barcode_array.group_by { |item| item }
       @shopping_list = barcode_with_quantity.map do |k, v|
         if k.include? '-'
           barcode, quantity = k.split('-')
