@@ -15,6 +15,8 @@ class ShoppingItem
   def save_price
     price = 0.05 * @quantity * @commodity.unit_price \
       if nine_five_discount?
+    price = (@quantity / 3) * @commodity.unit_price \
+      if free_one_discount?
     price || 0
   end
 
@@ -30,5 +32,10 @@ class ShoppingItem
   def nine_five_discount?
     Promotion.nine_five_discount_items && \
       Promotion.nine_five_discount_items.include?(@commodity.barcode)
+  end
+
+  def free_one_discount?
+    Promotion.free_one_discount_items && @quantity > 2 && \
+      Promotion.free_one_discount_items.include?(@commodity.barcode)
   end
 end

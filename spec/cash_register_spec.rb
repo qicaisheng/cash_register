@@ -44,7 +44,7 @@ describe CashRegister do
 
     context 'when have free one discount' do
       it 'puts with discount' do
-        Promotion.refresh(free_one: ['ITEM000001, ITEM000005'])
+        Promotion.refresh(free_one: %w(ITEM000001 ITEM000005))
         CashRegister.perfom
         expect($stdout.string).to eq [
           '***<没钱赚商店>购物清单***',
