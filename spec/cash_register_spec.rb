@@ -41,5 +41,22 @@ describe CashRegister do
         ].join("\n")
       end
     end
+
+    context 'when have free one discount' do
+      it 'puts with discount' do
+        Promotion.refresh(free_one: ['ITEM000001, ITEM000005'])
+        CashRegister.perfom
+        expect($stdout.string).to eq [
+          '***<没钱赚商店>购物清单***',
+          '名称：羽毛球，数量：5个，单价：1.00(元)，小计：4.00(元)',
+          '名称：苹果，数量：2斤，单价：5.50(元)，小计：11.00(元)',
+          '名称：可口可乐，数量：3瓶，单价：3.00(元)，小计：6.00(元)',
+          '----------------------',
+          '总计：21.00(元)',
+          '节省：4.00(元)',
+          "**********************\n"
+        ].join("\n")
+      end
+    end
   end
 end
