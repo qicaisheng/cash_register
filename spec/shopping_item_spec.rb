@@ -10,12 +10,13 @@ describe ShoppingItem do
       "barcode": "ITEM000003"
     )
   end
-  describe '#price' do
+  describe '#cost_price' do
     context 'when no promotion' do
       it 'returns total price' do
+        Promotion.refresh
         shopping_item = ShoppingItem.new(@apple, 2)
 
-        expect(shopping_item.price).to eq 11
+        expect(shopping_item.cost_price).to eq 11
       end
     end
   end

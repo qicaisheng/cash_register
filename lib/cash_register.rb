@@ -1,4 +1,5 @@
 require 'commodity_record'
+require 'promotion'
 require 'shopping_item'
 
 module CashRegister
@@ -43,10 +44,15 @@ module CashRegister
 
     def print_price
       puts "总计：#{format('%.2f', cost_price)}(元)"
+      puts "节省：#{format('%.2f', save_price)}(元)" if save_price != 0
     end
 
     def cost_price
-      @shopping_list.map(&:price).reduce(:+)
+      @shopping_list.map(&:cost_price).reduce(:+)
+    end
+
+    def save_price
+      @shopping_list.map(&:save_price).reduce(:+)
     end
   end
 end

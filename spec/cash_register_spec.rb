@@ -27,7 +27,7 @@ describe CashRegister do
 
     context 'when have 95% discount' do
       it 'puts with discount' do
-        Promotion.refresh(nine_five_discount: ['ITEM000003'])
+        Promotion.refresh(nine_five: ['ITEM000003'])
         CashRegister.perfom
         expect($stdout.string).to eq [
           '***<没钱赚商店>购物清单***',
