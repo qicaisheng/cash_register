@@ -34,12 +34,21 @@ module CashRegister
       puts '***<没钱赚商店>购物清单***'
       print_shopping_items
       puts '----------------------'
+      print_free_one_items
       print_price
       puts '**********************'
     end
 
     def print_shopping_items
       @shopping_list.each(&:print_item)
+    end
+
+    def print_free_one_items
+      if @shopping_list.map(&:free_one_discount?).compact.any?
+        puts '买二赠一商品：'
+        @shopping_list.each(&:print_free_one_item)
+        puts '----------------------'
+      end
     end
 
     def print_price

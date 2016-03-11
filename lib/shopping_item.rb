@@ -27,7 +27,10 @@ class ShoppingItem
       "#{'，节省' + format('%.2f', save_price) + '(元)' if nine_five_discount?}"
   end
 
-  private
+  def print_free_one_item
+    puts "名称：#{@commodity.name}，数量：#{@quantity / 3}#{@commodity.unit}" \
+      if free_one_discount?
+  end
 
   def nine_five_discount?
     Promotion.nine_five_discount_items && \
